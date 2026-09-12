@@ -1,0 +1,4 @@
+Hola Mundo! Este es un texto de ejemplo para el proyecto de Comunicaciones Digitales.
+Contiene letras mayusculas y minusculas, numeros como 123 y 456, signos de puntuacion,
+y algunos caracteres especiales: @, #, %, &, ñ, á, é, í, ó, ú.
+Tambien tiene varias lineas para que la distribucion de probabilidades no sea trivial.
