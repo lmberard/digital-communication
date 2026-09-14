@@ -8,7 +8,7 @@ Esta es la lista de todo lo que pide el enunciado para el Módulo B: las funcion
 |---|---|---|---|
 | ☑ | `analyze_text` | Lee el .txt y calcula la cantidad y la probabilidad de cada carácter (punto B.1) | Informe **(a)** |
 | ☐ | `calculate_entropy` | Calcula la entropía de la fuente (punto B.2) | Informe **(e)** |
-| ☐ | `generate_huffman_code` | Arma el diccionario de códigos de Huffman (punto B.3) | Informe **(a)**, y es la base para **(b)** y **(c)** |
+| ☑ | `generate_huffman_code` | Arma el diccionario de códigos de Huffman (punto B.3) | Informe **(a)**, y es la base para **(b)** y **(c)** |
 | ☐ | `calculate_lengths` | Longitud mínima, promedio y varianza del código (puntos B.4 y B.5) | Informe **(e)** |
 | ☐ | `encode_text` | Codifica el texto completo a bits, usando el código de arriba (punto B.6) | Informe **(d)** y **(f)** |
 | ☐ | `decode_bits` | Decodifica los bits de vuelta a texto — lado Receptor (punto B.7) | Informe **(d)** |
@@ -33,5 +33,6 @@ Esta es la lista de todo lo que pide el enunciado para el Módulo B: las funcion
 ## Cómo seguir
 
 1. ~~Empezar por `analyze_text`~~ — listo.
-2. Seguir con `calculate_entropy` y `generate_huffman_code` (usan `probabilities`, que ahora es el segundo valor que devuelve `analyze_text`). Después el resto de la tabla, en orden: cada función usa el resultado de la anterior.
+2. ~~`generate_huffman_code`~~ — listo (probado con el ejemplo clásico de 3 símbolos, con "aab", y con el texto de ejemplo: da código prefijo válido).
+3. Falta `calculate_entropy` (no bloquea el resto, pero hace falta para el Informe (e)), y después `encode_text`, `decode_bits`, `save_text` en ese orden — cada una usa el resultado de la anterior.
 3. Una vez que las 7 funciones andan, correr `python src/main.py` con el texto de ejemplo y armar las tablas y ejemplos que pide el Informe (sección 3).

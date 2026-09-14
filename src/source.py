@@ -71,13 +71,73 @@ def generate_huffman_code(probabilities):
     asigna una palabra hecha de 0s y 1s. Los caracteres mas frecuentes
     tendrian que quedar con codigos mas cortos.
 
+    Como funciona (resumen): se arma un arbol de abajo hacia arriba.
+    Se empieza con un "nodo" por cada caracter (con su probabilidad).
+    En cada paso, se toman los DOS nodos con menor probabilidad y se
+    juntan en un nodo nuevo (cuya probabilidad es la suma de esos dos).
+    Se repite hasta que queda un solo nodo: la raiz del arbol. El
+    codigo de cada caracter es el camino desde la raiz hasta el,
+    poniendo un '0' cada vez que se va para la izquierda y un '1' cada
+    vez que se va para la derecha.
+
     Recibe:
         probabilities -- el diccionario {caracter: probabilidad}
     Devuelve:
         un diccionario {caracter: codigo}, donde el codigo es un texto
         de '0's y '1's, por ejemplo {'a': '0', 'b': '10', 'c': '11'}
     """
-    raise NotImplementedError
+    # Empezamos con un nodo "hoja" por cada caracter
+    nodes = []
+    for char, prob in probabilities.items():
+        nodes.append({"prob": prob, "char": char})
+
+    # Caso especial: si el texto tiene un solo caracter distinto, no hay
+    # nada para combinar. Le asignamos el codigo '0' directamente.
+    if len(nodes) == 1:
+        return {nodes[0]["char"]: "0"}
+
+    # Vamos combinando de a dos nodos (los de menor probabilidad) hasta
+    # que quede uno solo: la raiz del arbol
+    while len(nodes) > 1:
+        # Ordenamos por probabilidad, de menor a mayor
+        nodes.sort(key=lambda node: node["prob"])
+
+        # Sacamos los dos con menor probabilidad
+        left = nodes.pop(0)
+        right = nodes.pop(0)
+
+        # Los combinamos en un nodo nuevo, y lo volvemos a meter en la lista
+        merged = {"prob": left["prob"] + right["prob"], "left": left, "right": right}
+        nodes.append(merged)
+
+    root = nodes[0]
+
+    # Recorremos el arbol desde la raiz para armar el codigo de cada caracter
+    code = {}
+    _walk_huffman_tree(root, "", code)
+    return code
+
+
+def _walk_huffman_tree(node, path_so_far, code):
+    """
+    Funcion auxiliar de generate_huffman_code: recorre el arbol de
+    Huffman (de la raiz hacia las hojas) y va completando el
+    diccionario {caracter: codigo}.
+
+    Recibe:
+        node -- el nodo actual del arbol
+        path_so_far -- el codigo acumulado para llegar hasta este nodo
+        code -- el diccionario que se va completando a medida que
+                 encontramos caracteres (se modifica directamente,
+                 no hace falta que esta funcion devuelva nada)
+    """
+    if "char" in node:
+        # Es una hoja: encontramos un caracter, guardamos su codigo
+        code[node["char"]] = path_so_far
+    else:
+        # Es un nodo interno: seguimos por los dos caminos posibles
+        _walk_huffman_tree(node["left"], path_so_far + "0", code)
+        _walk_huffman_tree(node["right"], path_so_far + "1", code)
 
 
 def calculate_lengths(code, probabilities):
