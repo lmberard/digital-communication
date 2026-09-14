@@ -189,7 +189,25 @@ def decode_bits(bits, code):
     Devuelve:
         el texto reconstruido
     """
-    raise NotImplementedError
+    # Damos vuelta el diccionario: en vez de {caracter: codigo},
+    # queremos {codigo: caracter}, para poder buscar al reves
+    code_to_char = {}
+    for char, char_code in code.items():
+        code_to_char[char_code] = char
+
+    # Vamos juntando bits en "buffer" hasta que forman un codigo
+    # conocido. Como el codigo de Huffman es prefijo (ningun codigo es
+    # el comienzo de otro), en cuanto el buffer coincide con un codigo
+    # sabemos con seguridad que es ese caracter, sin ambiguedad.
+    text = ""
+    buffer = ""
+    for bit in bits:
+        buffer = buffer + bit
+        if buffer in code_to_char:
+            text = text + code_to_char[buffer]
+            buffer = ""
+
+    return text
 
 
 def save_text(text, output_path):
