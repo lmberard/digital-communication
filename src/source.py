@@ -1,15 +1,17 @@
 """
-Codificacion de Huffman (Modulo B del enunciado).
+Codificacion de Huffman (Modulo B del enunciado). Ya esta completo.
 
 Huffman es un metodo para convertir un texto en una tira de 0s y 1s lo
 mas corta posible: a los caracteres que aparecen mas seguido les asigna
 un codigo mas corto, y a los que aparecen poco, uno mas largo.
 
-Las funciones de aca abajo todavia dicen "raise NotImplementedError", que
-en criollo significa "esto todavia no esta hecho". Hay que ir
-reemplazando eso, funcion por funcion, por el codigo real. No hace falta
-hacerlas todas de una: se puede probar cada una por separado antes de
-pasar a la siguiente.
+Las funciones de "Transmisor" (analyze_text, calculate_entropy,
+generate_huffman_code, calculate_lengths, encode_text) arman el codigo y
+codifican el texto. Las de "Receptor" (decode_bits, save_text) hacen el
+camino inverso. is_prefix_code es un chequeo extra que pide el Informe.
+
+Un resumen mas largo de cada funcion, y para que le sirve al Informe,
+esta en docs/MODULO_B.md.
 """
 
 import math
