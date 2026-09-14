@@ -1,46 +1,42 @@
-# Módulo B — Checklist (Huffman)
+# Módulo B — Huffman
 
-Esta es la lista de todo lo que pide el enunciado para el Módulo B: las funciones de código y, al lado, para qué parte del Informe sirve cada una. La idea es ir tildando a medida que se completa cada cosa.
+## Qué es esto y para qué
 
-## 1. Funciones de código (`src/source.py`)
+La idea del Módulo B es agarrar el texto que queremos mandar y convertirlo en una tira de 0s y 1s lo más corta posible, sin perder nada de información (después hay que poder reconstruir el texto exacto, letra por letra).
 
-| # | Función | Qué hace (enunciado) | Para qué parte del Informe sirve |
-|---|---|---|---|
-| ☑ | `analyze_text` | Lee el .txt y calcula la cantidad y la probabilidad de cada carácter (punto B.1) | Informe **(a)** |
-| ☑ | `calculate_entropy` | Calcula la entropía de la fuente (punto B.2) | Informe **(e)** |
-| ☑ | `generate_huffman_code` | Arma el diccionario de códigos de Huffman (punto B.3) | Informe **(a)**, y es la base para **(b)** y **(c)** |
-| ☑ | `calculate_lengths` | Longitud mínima, promedio y varianza del código (puntos B.4 y B.5) | Informe **(e)** |
-| ☑ | `encode_text` | Codifica el texto completo a bits, usando el código de arriba (punto B.6) | Informe **(d)** y **(f)** |
-| ☑ | `decode_bits` | Decodifica los bits de vuelta a texto — lado Receptor (punto B.7) | Informe **(d)** |
-| ☑ | `save_text` | Guarda el texto decodificado en un archivo — lado Receptor (punto B.8) | No se pide directo en el Informe, es para que el programa ande de punta a punta |
+La forma "obvia" de hacer esto sería usar el mismo largo de código para cada letra (como ASCII, que usa 8 bits para cualquier carácter, ya sea una `a` o una `#`). Huffman es más vivo: mira qué tan seguido aparece cada carácter en el texto, y les da códigos **más cortos a los que aparecen mucho** (como la letra `e` o el espacio) y **más largos a los que casi no aparecen** (como una `x` o un signo raro). En promedio, eso termina ocupando bastante menos espacio que darle a todos el mismo largo — es básicamente la misma idea que un compresor de archivos (zip, etc.).
 
-## 2. ✅ Cosas que pedía el Informe y que no estaban cubiertas por las 7 funciones (ya resueltas)
+Todo esto ya está hecho y probado en `src/source.py` (y el informe se arma solo con `src/report.py`, ver más abajo). Si alguien quiere ver los números exactos de qué tan bien funcionó con nuestro texto de ejemplo, están en `results/run1_informe_modulo_b.md` después de correr `python src/main.py`.
 
-- ☑ **Cantidad de apariciones de cada carácter.** `analyze_text` devuelve `(counts, probabilities)`, dos diccionarios en vez de uno solo.
-- ☑ **Eficiencia del código.** `calculate_lengths` ahora también devuelve la clave `'efficiency'` (= `min_length / avg_length`). Probado: en el caso clásico (donde Huffman es óptimo) da exactamente `1.0`; con el texto real da `0.9926` (99.27%).
-- ☑ **Verificación de código prefijo.** Nueva función `is_prefix_code(code)` en `src/source.py`. Probada con un caso válido, uno inválido a propósito, y con el código real del texto de ejemplo (da `True`).
+## Funciones de código (`src/source.py`)
 
-## 3. Qué hay que mostrar en el Informe (letras a-f del enunciado)
+| ✓ | Función | Qué hace | Punto del enunciado | Informe |
+|---|---|---|---|---|
+| ✅ | `analyze_text` | Lee el .txt y calcula la cantidad y la probabilidad de aparición de cada carácter | B.1 | (a) |
+| ✅ | `calculate_entropy` | Calcula la entropía de la fuente (cuántos bits hacen falta como mínimo, en promedio, por carácter) | B.2 | (e) |
+| ✅ | `generate_huffman_code` | Arma el árbol de Huffman y devuelve el diccionario {carácter: código} | B.3 | (a), base de (b) y (c) |
+| ✅ | `calculate_lengths` | Longitud mínima (= entropía), longitud promedio, varianza y eficiencia del código | B.4 y B.5 | (e) |
+| ✅ | `encode_text` | Codifica el texto completo a bits, usando el código de arriba | B.6 | (d) y (f) |
+| ✅ | `decode_bits` | Decodifica los bits de vuelta a texto — lado Receptor | B.7 | (d) |
+| ✅ | `save_text` | Guarda el texto decodificado en un archivo — lado Receptor | B.8 | — (para que el programa ande de punta a punta) |
+| ✅ | `is_prefix_code` | Verifica que ningún código sea el comienzo de otro (por eso se puede decodificar sin ambigüedad) | — (no es un punto numerado, pero hace falta para el Informe) | (b) |
+
+## Qué hay que mostrar en el Informe
 
 | Ítem | Qué pide el enunciado | De dónde sale |
 |---|---|---|
-| **(a)** | Tabla con la cantidad, la probabilidad y el código de Huffman de cada carácter | `analyze_text` (con la cantidad agregada) + `generate_huffman_code` |
+| **(a)** | Tabla con la cantidad, la probabilidad y el código de Huffman de cada carácter | `analyze_text` + `generate_huffman_code` |
 | **(b)** | Verificar que el código es "prefijo" (que ninguna palabra de código es el comienzo de otra) | `is_prefix_code` |
-| **(c)** | Descripción breve de las características del código obtenido | Texto para el Informe, mirando los resultados de `generate_huffman_code` |
+| **(c)** | Descripción breve de las características del código obtenido | Se arma sola en `report.py`, a partir del carácter más frecuente y el rango de longitudes de código |
 | **(d)** | Una línea de texto de ejemplo: original → en bits → decodificada de nuevo | `encode_text` + `decode_bits` |
-| **(e)** | Tabla con: entropía, longitud mínima, longitud promedio, varianza, eficiencia, y la longitud de un código de largo fijo (ASCII extendido = siempre 8 bits por carácter) | `calculate_entropy` + `calculate_lengths` (ya trae `efficiency` incluida) + el dato fijo "8 bits" |
-| **(f)** | Tabla: cuántos bits hacen falta en total para todo el texto con Huffman vs. con código de largo fijo | Cantidad total = largo del resultado de `encode_text`, comparado contra "cantidad de caracteres del texto × 8" |
+| **(e)** | Tabla con: entropía, longitud mínima, longitud promedio, varianza, eficiencia, y la longitud de un código de largo fijo (ASCII extendido = siempre 8 bits por carácter) | `calculate_entropy` + `calculate_lengths` (ya incluye la eficiencia) |
+| **(f)** | Tabla: cuántos bits hacen falta en total para todo el texto con Huffman vs. con código de largo fijo | Largo de lo que devuelve `encode_text`, comparado contra "cantidad de caracteres del texto × 8" |
 
-## Cómo seguir
+## Qué queda guardado en `results/`
 
-1. ~~Empezar por `analyze_text`~~ — listo.
-2. ~~`generate_huffman_code`~~ — listo (probado con el ejemplo clásico de 3 símbolos, con "aab", y con el texto de ejemplo: da código prefijo válido).
-3. ~~`encode_text`~~ — listo (probado con el ejemplo del docstring y con el texto real: 323 caracteres se convirtieron en 1478 bits, menos que los 2584 que ocuparía con ASCII de 8 bits fijos).
-4. ~~`decode_bits`~~ — listo (probado que el texto recuperado es idéntico al original, carácter por carácter).
-5. ~~`save_text`~~ — listo. **El programa ya corre de punta a punta sin errores** (`python src/main.py`): guarda el texto recibido en `results/run1_received.txt`, y coincide 100% con el original.
-6. ~~`calculate_entropy`~~ — listo (probado con casos conocidos: 3 símbolos da 1.5, 4 equiprobables da exactamente log2(4)=2.0, un solo carácter da 0.0; con el texto real da 4.54 bits, un poco menos que el promedio real de 4.575 bits/carácter que ya habíamos medido — tiene sentido, Huffman es casi óptimo).
-7. ~~`calculate_lengths`~~ — listo. **Las 7 funciones de Módulo B están hechas.** Probado con el caso clásico (`avg_length` da exactamente igual a `min_length`, porque ahí Huffman es óptimo) y con el texto real (`min_length` ≤ `avg_length`, como tiene que ser, y `avg_length × cantidad de caracteres` da los mismos 1478 bits que ya habíamos medido con `encode_text`).
-8. ~~Eficiencia y verificación de código prefijo~~ — listo (sección 2). Ya no queda ninguna función pendiente.
-9. ~~Armar el Informe (a)-(f)~~ — listo. `src/report.py` (archivo nuevo, aparte de `source.py`: se encarga de darle formato al Informe, no de la lógica de Huffman) tiene `generate_module_b_report`, que arma las 6 partes y las guarda en `results/run1_informe_modulo_b.md` cada vez que se corre `python src/main.py`. Incluye hasta la letra **(c)**, que es puro texto — se arma automáticamente a partir de los datos (caracter más frecuente, rango de longitudes de código), no hay que escribirla a mano.
+Cada vez que se corre `python src/main.py` (sin `--dry-run`) se generan dos archivos, con el prefijo que se haya usado (`run1` por defecto):
 
-**Módulo B terminado**: las 7 funciones de `source.py`, más `is_prefix_code`, más el informe en markdown. Revisar `results/run1_informe_modulo_b.md` después de correr el programa para ver las tablas completas.
+- **`run1_received.txt`** — el texto que quedó después de codificarlo con Huffman y volver a decodificarlo. Tiene que ser idéntico, letra por letra, al archivo de entrada (`data/example_text.txt`) — si no lo es, algo está mal en `encode_text` o `decode_bits`.
+- **`run1_informe_modulo_b.md`** — el informe armado por `src/report.py`, con las 6 tablas/ejemplos de la sección de arriba, listo para copiar y pegar (o adaptar) en el informe final que hay que entregar.
+
+Estos dos archivos **no se suben a GitHub** (están en `.gitignore`, adentro de `results/`) porque se generan solos cada vez que alguien corre el programa — no hace falta versionarlos.
