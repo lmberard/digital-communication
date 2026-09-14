@@ -9,7 +9,7 @@ El sistema completo es: **Transmisor** (codifica el texto y lo prepara para envi
 ## Codigo: 
 | Bloque del diagrama | Qué hace | Estado |
 |---|---|---|
-| **B** — Codificador/Decodificador de fuente (Huffman) | Convierte el texto en 0s y 1s de la forma más corta posible, y lo reconstruye del otro lado | 🔧 En progreso — es lo que hay que completar en `src/source.py` |
+| **B** — Codificador/Decodificador de fuente (Huffman) | Convierte el texto en 0s y 1s de la forma más corta posible, y lo reconstruye del otro lado | 🔧 En progreso — ver el checklist en [MODULO_B.md](MODULO_B.md) |
 | **C** — Codificador/Decodificador de canal | Le agrega al mensaje información extra para poder detectar y corregir errores | ⏳ Todavía no arrancamos, se agrega más adelante |
 | **D** — Modulador/Demodulador | Convierte los 0s y 1s en señales que se pueden transmitir | ⏳ Todavía no arrancamos |
 | **E** — Canal (ruido) | Simula que el mensaje se ensucia un poco en el camino | ⏳ Todavía no arrancamos |
