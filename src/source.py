@@ -12,6 +12,8 @@ hacerlas todas de una: se puede probar cada una por separado antes de
 pasar a la siguiente.
 """
 
+import math
+
 
 def analyze_text(file_path):
     """
@@ -62,7 +64,13 @@ def calculate_entropy(probabilities):
     Devuelve:
         un numero (la entropia, en bits)
     """
-    raise NotImplementedError
+    # La formula de la entropia es: H = - suma( p * log2(p) ) para cada
+    # caracter. El "-" esta porque log2(p) da negativo (p es un numero
+    # entre 0 y 1), y asi el resultado final queda positivo.
+    entropy = 0
+    for prob in probabilities.values():
+        entropy = entropy - prob * math.log2(prob)
+    return entropy
 
 
 def generate_huffman_code(probabilities):

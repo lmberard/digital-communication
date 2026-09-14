@@ -7,7 +7,7 @@ Esta es la lista de todo lo que pide el enunciado para el Módulo B: las funcion
 | # | Función | Qué hace (enunciado) | Para qué parte del Informe sirve |
 |---|---|---|---|
 | ☑ | `analyze_text` | Lee el .txt y calcula la cantidad y la probabilidad de cada carácter (punto B.1) | Informe **(a)** |
-| ☐ | `calculate_entropy` | Calcula la entropía de la fuente (punto B.2) | Informe **(e)** |
+| ☑ | `calculate_entropy` | Calcula la entropía de la fuente (punto B.2) | Informe **(e)** |
 | ☑ | `generate_huffman_code` | Arma el diccionario de códigos de Huffman (punto B.3) | Informe **(a)**, y es la base para **(b)** y **(c)** |
 | ☐ | `calculate_lengths` | Longitud mínima, promedio y varianza del código (puntos B.4 y B.5) | Informe **(e)** |
 | ☑ | `encode_text` | Codifica el texto completo a bits, usando el código de arriba (punto B.6) | Informe **(d)** y **(f)** |
@@ -37,5 +37,6 @@ Esta es la lista de todo lo que pide el enunciado para el Módulo B: las funcion
 3. ~~`encode_text`~~ — listo (probado con el ejemplo del docstring y con el texto real: 323 caracteres se convirtieron en 1478 bits, menos que los 2584 que ocuparía con ASCII de 8 bits fijos).
 4. ~~`decode_bits`~~ — listo (probado que el texto recuperado es idéntico al original, carácter por carácter).
 5. ~~`save_text`~~ — listo. **El programa ya corre de punta a punta sin errores** (`python src/main.py`): guarda el texto recibido en `results/run1_received.txt`, y coincide 100% con el original.
-6. Solo falta `calculate_entropy` — no bloquea el resto del programa, pero hace falta para las tablas del Informe (e).
-3. Una vez que las 7 funciones andan, correr `python src/main.py` con el texto de ejemplo y armar las tablas y ejemplos que pide el Informe (sección 3).
+6. ~~`calculate_entropy`~~ — listo (probado con casos conocidos: 3 símbolos da 1.5, 4 equiprobables da exactamente log2(4)=2.0, un solo carácter da 0.0; con el texto real da 4.54 bits, un poco menos que el promedio real de 4.575 bits/carácter que ya habíamos medido — tiene sentido, Huffman es casi óptimo).
+7. Solo falta `calculate_lengths` para terminar las 7 funciones. No bloquea el programa, pero hace falta para el Informe (e), y ahí mismo hay que sumar el cálculo de la eficiencia (ver sección 2).
+8. Con las 7 funciones listas, armar las tablas y ejemplos que pide el Informe (sección 3): las letras (b) y (c) todavía no tienen ni función ni texto escrito.
