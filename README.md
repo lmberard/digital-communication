@@ -1,15 +1,18 @@
 # TP TA137 – Sistema de Comunicaciones Digitales
 
-Este es el código del TP integrador de Comunicaciones Digitales. Por ahora solo tiene la primera parte: leer un texto y codificarlo/decodificarlo con el algoritmo de Huffman. Las partes que faltan (canal, modulación, etc.) se van a ir agregando más adelante, a medida que las veamos en clase — no hace falta que esté todo armado desde el principio.
+Este es el código del TP integrador de Comunicaciones Digitales. Por ahora tiene la primera parte completa: leer un texto, codificarlo/decodificarlo con el algoritmo de Huffman, y armar el informe con las tablas que pide el enunciado. Las partes que faltan (canal, modulación, etc.) se van a ir agregando más adelante, a medida que las veamos en clase — no hace falta que esté todo armado desde el principio.
 
 ## Qué hay en cada archivo
 
 - `src/main.py` — el programa principal. Es el que se ejecuta, y llama en orden a las funciones de los demás archivos.
 - `src/cli.py` — se encarga de leer los parámetros por consola y mostrar los mensajes. No hace falta tocarlo para hacer el TP.
-- `src/source.py` — **acá es donde hay que trabajar ahora.** Tiene las funciones de Huffman, todas explicadas pero sin hacer todavía.
+- `src/source.py` — las funciones de Huffman (Módulo B). **Ya está completo.**
+- `src/report.py` — arma el informe (tablas y ejemplos) en un archivo `.md` dentro de `results/`, a partir de lo que calcula `source.py`.
+- `checks/verify_huffman.py` — un script aparte (no lo usa el programa) que compara nuestro Huffman contra una librería de Python, solo para verificar que da resultados igual de buenos.
 - `data/` — el archivo de texto que se usa como ejemplo.
-- `results/` — acá se va a guardar el resultado cuando corramos el programa.
+- `results/` — acá se guardan el texto recibido y el informe cada vez que se corre el programa.
 - `docs/ARCHITECTURE.md` — explica el diagrama de bloques del TP y qué parte está hecha y cuál falta.
+- `docs/MODULO_B.md` — el checklist detallado de todo lo que pedía Módulo B (ya completo).
 
 ## Instalación (una sola vez)
 
@@ -52,8 +55,8 @@ Para correr el programa de verdad:
 python src/main.py
 ```
 
-Como las funciones de Huffman todavía no están hechas, esto va a terminar con un error que dice `NotImplementedError` — es lo esperado por ahora. A medida que se vayan completando las funciones en `src/source.py`, el programa va a ir avanzando más.
+Esto codifica el texto de ejemplo con Huffman, lo decodifica, y guarda dos archivos en `results/`: el texto recibido (`run1_received.txt`) y el informe con las tablas (`run1_informe_modulo_b.md`).
 
 ## Cómo seguimos
 
-Todo el trabajo por ahora está en `src/source.py`. El archivo tiene 7 funciones, cada una con una explicación de qué tiene que hacer, qué recibe y qué tiene que devolver (con un ejemplo). Se puede ir haciendo una por una, sin necesidad de terminarlas todas juntas — no hace falta entender el archivo entero para empezar por la primera.
+Módulo B (Huffman) ya está completo — ver el detalle en [docs/MODULO_B.md](docs/MODULO_B.md). El próximo paso es Módulo C (codificación de canal), que se va a agregar en un archivo nuevo (`src/channel.py` o similar) siguiendo el mismo esquema: funciones explicadas paso a paso, y `main.py` las va a ir llamando en el lugar que ya está marcado en el código.
