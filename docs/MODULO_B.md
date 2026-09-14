@@ -9,7 +9,7 @@ Esta es la lista de todo lo que pide el enunciado para el Módulo B: las funcion
 | ☑ | `analyze_text` | Lee el .txt y calcula la cantidad y la probabilidad de cada carácter (punto B.1) | Informe **(a)** |
 | ☑ | `calculate_entropy` | Calcula la entropía de la fuente (punto B.2) | Informe **(e)** |
 | ☑ | `generate_huffman_code` | Arma el diccionario de códigos de Huffman (punto B.3) | Informe **(a)**, y es la base para **(b)** y **(c)** |
-| ☐ | `calculate_lengths` | Longitud mínima, promedio y varianza del código (puntos B.4 y B.5) | Informe **(e)** |
+| ☑ | `calculate_lengths` | Longitud mínima, promedio y varianza del código (puntos B.4 y B.5) | Informe **(e)** |
 | ☑ | `encode_text` | Codifica el texto completo a bits, usando el código de arriba (punto B.6) | Informe **(d)** y **(f)** |
 | ☑ | `decode_bits` | Decodifica los bits de vuelta a texto — lado Receptor (punto B.7) | Informe **(d)** |
 | ☑ | `save_text` | Guarda el texto decodificado en un archivo — lado Receptor (punto B.8) | No se pide directo en el Informe, es para que el programa ande de punta a punta |
@@ -38,5 +38,5 @@ Esta es la lista de todo lo que pide el enunciado para el Módulo B: las funcion
 4. ~~`decode_bits`~~ — listo (probado que el texto recuperado es idéntico al original, carácter por carácter).
 5. ~~`save_text`~~ — listo. **El programa ya corre de punta a punta sin errores** (`python src/main.py`): guarda el texto recibido en `results/run1_received.txt`, y coincide 100% con el original.
 6. ~~`calculate_entropy`~~ — listo (probado con casos conocidos: 3 símbolos da 1.5, 4 equiprobables da exactamente log2(4)=2.0, un solo carácter da 0.0; con el texto real da 4.54 bits, un poco menos que el promedio real de 4.575 bits/carácter que ya habíamos medido — tiene sentido, Huffman es casi óptimo).
-7. Solo falta `calculate_lengths` para terminar las 7 funciones. No bloquea el programa, pero hace falta para el Informe (e), y ahí mismo hay que sumar el cálculo de la eficiencia (ver sección 2).
-8. Con las 7 funciones listas, armar las tablas y ejemplos que pide el Informe (sección 3): las letras (b) y (c) todavía no tienen ni función ni texto escrito.
+7. ~~`calculate_lengths`~~ — listo. **Las 7 funciones de Módulo B están hechas.** Probado con el caso clásico (`avg_length` da exactamente igual a `min_length`, porque ahí Huffman es óptimo) y con el texto real (`min_length` ≤ `avg_length`, como tiene que ser, y `avg_length × cantidad de caracteres` da los mismos 1478 bits que ya habíamos medido con `encode_text`).
+8. Lo que queda es para el Informe, no para el programa (sección 2 y 3 de acá arriba): calcular la eficiencia, armar la verificación de código prefijo (b), y escribir la descripción (c) y las tablas/ejemplos con los resultados.

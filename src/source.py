@@ -161,7 +161,29 @@ def calculate_lengths(code, probabilities):
         un diccionario con las claves 'min_length', 'avg_length' y
         'variance'
     """
-    raise NotImplementedError
+    # La longitud minima teorica es la entropia: Lmin = H(texto)
+    min_length = calculate_entropy(probabilities)
+
+    # El promedio real: para cada caracter, su probabilidad multiplicada
+    # por la longitud de su codigo, todo sumado
+    avg_length = 0
+    for char, prob in probabilities.items():
+        code_length = len(code[char])
+        avg_length = avg_length + prob * code_length
+
+    # La varianza: que tan lejos esta, en promedio, la longitud de cada
+    # codigo respecto del promedio (elevado al cuadrado, para que no se
+    # cancelen los que estan por arriba con los que estan por abajo)
+    variance = 0
+    for char, prob in probabilities.items():
+        code_length = len(code[char])
+        variance = variance + prob * (code_length - avg_length) ** 2
+
+    return {
+        "min_length": min_length,
+        "avg_length": avg_length,
+        "variance": variance,
+    }
 
 
 def encode_text(text, code):
