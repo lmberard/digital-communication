@@ -15,19 +15,40 @@ pasar a la siguiente.
 
 def analyze_text(file_path):
     """
-    Lee el archivo de texto y calcula la probabilidad de aparicion de
-    cada caracter (que porcentaje del texto ocupa cada uno).
+    Lee el archivo de texto y calcula, para cada caracter que aparece,
+    cuantas veces aparece (cantidad) y que porcentaje del texto ocupa
+    (probabilidad).
 
-    Ejemplo: si el texto fuera "aab", el resultado tendria que ser algo
-    como {'a': 0.66, 'b': 0.33} (2 de cada 3 caracteres son 'a').
+    Ejemplo: si el texto fuera "aab", el resultado tendria que ser:
+        counts = {'a': 2, 'b': 1}
+        probabilities = {'a': 0.66..., 'b': 0.33...}
 
     Recibe:
         file_path -- la ruta del archivo de texto, por ejemplo
                       "data/example_text.txt"
     Devuelve:
-        un diccionario {caracter: probabilidad}
+        una tupla (counts, probabilities):
+        - counts es un diccionario {caracter: cantidad de veces que aparece}
+        - probabilities es un diccionario {caracter: probabilidad}
     """
-    raise NotImplementedError
+    with open(file_path, "r", encoding="utf-8") as file:
+        text = file.read()
+
+    # Contamos cuantas veces aparece cada caracter en el texto
+    counts = {}
+    for char in text:
+        if char in counts:
+            counts[char] = counts[char] + 1
+        else:
+            counts[char] = 1
+
+    # A partir de las cantidades, calculamos la probabilidad de cada caracter
+    total_chars = len(text)
+    probabilities = {}
+    for char, count in counts.items():
+        probabilities[char] = count / total_chars
+
+    return counts, probabilities
 
 
 def calculate_entropy(probabilities):

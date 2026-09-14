@@ -23,7 +23,7 @@ def main():
         return
 
     # Codificamos el texto con Huffman
-    probabilities = source.analyze_text(args.input)
+    counts, probabilities = source.analyze_text(args.input)
     code = source.generate_huffman_code(probabilities)
     bits = source.encode_text(text, code)
 

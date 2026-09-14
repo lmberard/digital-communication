@@ -6,7 +6,7 @@ Esta es la lista de todo lo que pide el enunciado para el Módulo B: las funcion
 
 | # | Función | Qué hace (enunciado) | Para qué parte del Informe sirve |
 |---|---|---|---|
-| ☐ | `analyze_text` | Lee el .txt y calcula la probabilidad de cada carácter (punto B.1) | Informe **(a)** |
+| ☑ | `analyze_text` | Lee el .txt y calcula la cantidad y la probabilidad de cada carácter (punto B.1) | Informe **(a)** |
 | ☐ | `calculate_entropy` | Calcula la entropía de la fuente (punto B.2) | Informe **(e)** |
 | ☐ | `generate_huffman_code` | Arma el diccionario de códigos de Huffman (punto B.3) | Informe **(a)**, y es la base para **(b)** y **(c)** |
 | ☐ | `calculate_lengths` | Longitud mínima, promedio y varianza del código (puntos B.4 y B.5) | Informe **(e)** |
@@ -14,12 +14,10 @@ Esta es la lista de todo lo que pide el enunciado para el Módulo B: las funcion
 | ☐ | `decode_bits` | Decodifica los bits de vuelta a texto — lado Receptor (punto B.7) | Informe **(d)** |
 | ☐ | `save_text` | Guarda el texto decodificado en un archivo — lado Receptor (punto B.8) | No se pide directo en el Informe, es para que el programa ande de punta a punta |
 
-## 2. ⚠️ Dos cosas que pide el Informe y que hoy no están cubiertas
+## 2. ⚠️ Cosas que pide el Informe y que no están cubiertas por las 7 funciones
 
-El enunciado pide dos datos para el Informe que no entran en ninguna de las 7 funciones de arriba tal cual están. Hay que agregarlos en algún lado (pueden ir adentro de una función existente, o en una función nueva chiquita — lo vemos cuando lleguemos ahí):
-
-- **Cantidad de apariciones de cada carácter.** El Informe (a) pide "la cantidad **y** la probabilidad" de cada carácter, pero `analyze_text` hoy solo calcula la probabilidad. Hay que sumar también cuántas veces aparece cada uno (no solo el porcentaje).
-- **Eficiencia del código.** El Informe (e) pide la eficiencia (entropía dividido longitud promedio), y eso no es ninguno de los puntos B.1 a B.8 — hay que calcularla aparte, usando lo que devuelven `calculate_entropy` y `calculate_lengths`.
+- ☑ **Cantidad de apariciones de cada carácter.** ~~El Informe (a) pide "la cantidad **y** la probabilidad" de cada carácter, pero `analyze_text` hoy solo calcula la probabilidad.~~ Resuelto: `analyze_text` ahora devuelve `(counts, probabilities)`, dos diccionarios en vez de uno solo.
+- ☐ **Eficiencia del código.** El Informe (e) pide la eficiencia (entropía dividido longitud promedio), y eso no es ninguno de los puntos B.1 a B.8 — hay que calcularla aparte, usando lo que devuelven `calculate_entropy` y `calculate_lengths`.
 
 ## 3. Qué hay que mostrar en el Informe (letras a-f del enunciado)
 
@@ -34,6 +32,6 @@ El enunciado pide dos datos para el Informe que no entran en ninguna de las 7 fu
 
 ## Cómo seguir
 
-1. Empezar por `analyze_text` (y de una, sumarle también la cantidad de apariciones — ver punto 2).
-2. Seguir el orden de la tabla de arriba: cada función usa el resultado de la anterior.
+1. ~~Empezar por `analyze_text`~~ — listo.
+2. Seguir con `calculate_entropy` y `generate_huffman_code` (usan `probabilities`, que ahora es el segundo valor que devuelve `analyze_text`). Después el resto de la tabla, en orden: cada función usa el resultado de la anterior.
 3. Una vez que las 7 funciones andan, correr `python src/main.py` con el texto de ejemplo y armar las tablas y ejemplos que pide el Informe (sección 3).
