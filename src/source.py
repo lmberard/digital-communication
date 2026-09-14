@@ -170,7 +170,10 @@ def encode_text(text, code):
     Devuelve:
         un texto hecho solo de '0's y '1's
     """
-    raise NotImplementedError
+    bits = ""
+    for char in text:
+        bits = bits + code[char]
+    return bits
 
 
 def decode_bits(bits, code):
