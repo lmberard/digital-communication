@@ -12,7 +12,7 @@ Esta es la lista de todo lo que pide el enunciado para el Módulo B: las funcion
 | ☐ | `calculate_lengths` | Longitud mínima, promedio y varianza del código (puntos B.4 y B.5) | Informe **(e)** |
 | ☑ | `encode_text` | Codifica el texto completo a bits, usando el código de arriba (punto B.6) | Informe **(d)** y **(f)** |
 | ☑ | `decode_bits` | Decodifica los bits de vuelta a texto — lado Receptor (punto B.7) | Informe **(d)** |
-| ☐ | `save_text` | Guarda el texto decodificado en un archivo — lado Receptor (punto B.8) | No se pide directo en el Informe, es para que el programa ande de punta a punta |
+| ☑ | `save_text` | Guarda el texto decodificado en un archivo — lado Receptor (punto B.8) | No se pide directo en el Informe, es para que el programa ande de punta a punta |
 
 ## 2. ⚠️ Cosas que pide el Informe y que no están cubiertas por las 7 funciones
 
@@ -36,5 +36,6 @@ Esta es la lista de todo lo que pide el enunciado para el Módulo B: las funcion
 2. ~~`generate_huffman_code`~~ — listo (probado con el ejemplo clásico de 3 símbolos, con "aab", y con el texto de ejemplo: da código prefijo válido).
 3. ~~`encode_text`~~ — listo (probado con el ejemplo del docstring y con el texto real: 323 caracteres se convirtieron en 1478 bits, menos que los 2584 que ocuparía con ASCII de 8 bits fijos).
 4. ~~`decode_bits`~~ — listo (probado que el texto recuperado es idéntico al original, carácter por carácter).
-5. Falta solo `save_text` para que el programa corra de punta a punta sin errores. También sigue pendiente `calculate_entropy`, que no bloquea el resto pero hace falta para el Informe (e).
+5. ~~`save_text`~~ — listo. **El programa ya corre de punta a punta sin errores** (`python src/main.py`): guarda el texto recibido en `results/run1_received.txt`, y coincide 100% con el original.
+6. Solo falta `calculate_entropy` — no bloquea el resto del programa, pero hace falta para las tablas del Informe (e).
 3. Una vez que las 7 funciones andan, correr `python src/main.py` con el texto de ejemplo y armar las tablas y ejemplos que pide el Informe (sección 3).

@@ -220,4 +220,5 @@ def save_text(text, output_path):
                         "results/run1_received.txt"
     No devuelve nada, solo crea el archivo.
     """
-    raise NotImplementedError
+    with open(output_path, "w", encoding="utf-8") as file:
+        file.write(text)
