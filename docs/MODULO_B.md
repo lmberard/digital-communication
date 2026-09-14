@@ -14,20 +14,21 @@ Esta es la lista de todo lo que pide el enunciado para el Módulo B: las funcion
 | ☑ | `decode_bits` | Decodifica los bits de vuelta a texto — lado Receptor (punto B.7) | Informe **(d)** |
 | ☑ | `save_text` | Guarda el texto decodificado en un archivo — lado Receptor (punto B.8) | No se pide directo en el Informe, es para que el programa ande de punta a punta |
 
-## 2. ⚠️ Cosas que pide el Informe y que no están cubiertas por las 7 funciones
+## 2. ✅ Cosas que pedía el Informe y que no estaban cubiertas por las 7 funciones (ya resueltas)
 
-- ☑ **Cantidad de apariciones de cada carácter.** ~~El Informe (a) pide "la cantidad **y** la probabilidad" de cada carácter, pero `analyze_text` hoy solo calcula la probabilidad.~~ Resuelto: `analyze_text` ahora devuelve `(counts, probabilities)`, dos diccionarios en vez de uno solo.
-- ☐ **Eficiencia del código.** El Informe (e) pide la eficiencia (entropía dividido longitud promedio), y eso no es ninguno de los puntos B.1 a B.8 — hay que calcularla aparte, usando lo que devuelven `calculate_entropy` y `calculate_lengths`.
+- ☑ **Cantidad de apariciones de cada carácter.** `analyze_text` devuelve `(counts, probabilities)`, dos diccionarios en vez de uno solo.
+- ☑ **Eficiencia del código.** `calculate_lengths` ahora también devuelve la clave `'efficiency'` (= `min_length / avg_length`). Probado: en el caso clásico (donde Huffman es óptimo) da exactamente `1.0`; con el texto real da `0.9926` (99.27%).
+- ☑ **Verificación de código prefijo.** Nueva función `is_prefix_code(code)` en `src/source.py`. Probada con un caso válido, uno inválido a propósito, y con el código real del texto de ejemplo (da `True`).
 
 ## 3. Qué hay que mostrar en el Informe (letras a-f del enunciado)
 
 | Ítem | Qué pide el enunciado | De dónde sale |
 |---|---|---|
 | **(a)** | Tabla con la cantidad, la probabilidad y el código de Huffman de cada carácter | `analyze_text` (con la cantidad agregada) + `generate_huffman_code` |
-| **(b)** | Verificar que el código es "prefijo" (que ninguna palabra de código es el comienzo de otra) | No hay una función pedida para esto puntualmente — hay que armar una chiquita, o revisarlo a mano y explicarlo en el Informe |
+| **(b)** | Verificar que el código es "prefijo" (que ninguna palabra de código es el comienzo de otra) | `is_prefix_code` |
 | **(c)** | Descripción breve de las características del código obtenido | Texto para el Informe, mirando los resultados de `generate_huffman_code` |
 | **(d)** | Una línea de texto de ejemplo: original → en bits → decodificada de nuevo | `encode_text` + `decode_bits` |
-| **(e)** | Tabla con: entropía, longitud mínima, longitud promedio, varianza, eficiencia, y la longitud de un código de largo fijo (ASCII extendido = siempre 8 bits por carácter) | `calculate_entropy` + `calculate_lengths` + la eficiencia (punto 2 de arriba) + el dato fijo "8 bits" |
+| **(e)** | Tabla con: entropía, longitud mínima, longitud promedio, varianza, eficiencia, y la longitud de un código de largo fijo (ASCII extendido = siempre 8 bits por carácter) | `calculate_entropy` + `calculate_lengths` (ya trae `efficiency` incluida) + el dato fijo "8 bits" |
 | **(f)** | Tabla: cuántos bits hacen falta en total para todo el texto con Huffman vs. con código de largo fijo | Cantidad total = largo del resultado de `encode_text`, comparado contra "cantidad de caracteres del texto × 8" |
 
 ## Cómo seguir
@@ -39,4 +40,5 @@ Esta es la lista de todo lo que pide el enunciado para el Módulo B: las funcion
 5. ~~`save_text`~~ — listo. **El programa ya corre de punta a punta sin errores** (`python src/main.py`): guarda el texto recibido en `results/run1_received.txt`, y coincide 100% con el original.
 6. ~~`calculate_entropy`~~ — listo (probado con casos conocidos: 3 símbolos da 1.5, 4 equiprobables da exactamente log2(4)=2.0, un solo carácter da 0.0; con el texto real da 4.54 bits, un poco menos que el promedio real de 4.575 bits/carácter que ya habíamos medido — tiene sentido, Huffman es casi óptimo).
 7. ~~`calculate_lengths`~~ — listo. **Las 7 funciones de Módulo B están hechas.** Probado con el caso clásico (`avg_length` da exactamente igual a `min_length`, porque ahí Huffman es óptimo) y con el texto real (`min_length` ≤ `avg_length`, como tiene que ser, y `avg_length × cantidad de caracteres` da los mismos 1478 bits que ya habíamos medido con `encode_text`).
-8. Lo que queda es para el Informe, no para el programa (sección 2 y 3 de acá arriba): calcular la eficiencia, armar la verificación de código prefijo (b), y escribir la descripción (c) y las tablas/ejemplos con los resultados.
+8. ~~Eficiencia y verificación de código prefijo~~ — listo (sección 2). Ya no queda ninguna función pendiente.
+9. Lo único que falta ahora es armar el Informe en sí: las tablas y ejemplos de la sección 3, usando lo que ya devuelven las funciones. La letra **(c)** es la única que es puro texto (no sale de ninguna función) — hay que escribirla a partir de lo que se observa en los resultados.

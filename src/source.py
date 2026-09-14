@@ -148,18 +148,42 @@ def _walk_huffman_tree(node, path_so_far, code):
         _walk_huffman_tree(node["right"], path_so_far + "1", code)
 
 
+def is_prefix_code(code):
+    """
+    Verifica que el codigo sea un codigo prefijo: que ninguna palabra de
+    codigo sea, al mismo tiempo, el comienzo de otra palabra de codigo.
+    Esto es justamente lo que permite decodificar sin ambiguedad (ver
+    decode_bits) -- por eso vale la pena chequearlo.
+
+    Ejemplo: {'a': '0', 'b': '10', 'c': '11'} SI es prefijo (ninguno
+    empieza igual que otro). En cambio {'a': '0', 'b': '01'} NO lo es,
+    porque el codigo de 'a' ('0') es el comienzo del codigo de 'b' ('01').
+
+    Recibe:
+        code -- el diccionario {caracter: codigo}
+    Devuelve:
+        True si es codigo prefijo, False si no
+    """
+    codes = list(code.values())
+    for i, code_a in enumerate(codes):
+        for code_b in codes[i + 1:]:
+            if code_a.startswith(code_b) or code_b.startswith(code_a):
+                return False
+    return True
+
+
 def calculate_lengths(code, probabilities):
     """
     Calcula que tan bueno es el codigo que armamos: la longitud minima
     posible (segun la entropia), el promedio real de longitud de las
-    palabras de codigo, y la varianza.
+    palabras de codigo, la varianza, y la eficiencia.
 
     Recibe:
         code -- el diccionario {caracter: codigo} de generate_huffman_code
         probabilities -- el diccionario {caracter: probabilidad}
     Devuelve:
-        un diccionario con las claves 'min_length', 'avg_length' y
-        'variance'
+        un diccionario con las claves 'min_length', 'avg_length',
+        'variance' y 'efficiency'
     """
     # La longitud minima teorica es la entropia: Lmin = H(texto)
     min_length = calculate_entropy(probabilities)
@@ -179,10 +203,16 @@ def calculate_lengths(code, probabilities):
         code_length = len(code[char])
         variance = variance + prob * (code_length - avg_length) ** 2
 
+    # La eficiencia dice que tan cerca esta nuestro codigo del ideal
+    # teorico: 1.0 (100%) seria un codigo perfecto, que ocupa exactamente
+    # lo que dice la entropia. Cuanto mas cerca de 1.0, mejor.
+    efficiency = min_length / avg_length
+
     return {
         "min_length": min_length,
         "avg_length": avg_length,
         "variance": variance,
+        "efficiency": efficiency,
     }
 
 
