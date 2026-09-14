@@ -9,7 +9,7 @@ Este es el código del TP integrador de Comunicaciones Digitales. Por ahora tien
 - `src/source.py` — las funciones de Huffman (Módulo B). **Ya está completo.**
 - `src/report.py` — arma el informe (tablas y ejemplos) en un archivo `.md` dentro de `results/`, a partir de lo que calcula `source.py`.
 - `checks/verify_huffman.py` — un script aparte (no lo usa el programa) que compara nuestro Huffman contra una librería de Python, solo para verificar que da resultados igual de buenos.
-- `data/` — el archivo de texto que se usa como ejemplo.
+- `data/` — archivos de texto de ejemplo para probar el programa (se puede elegir cuál usar con `--input`, ver más abajo).
 - `results/` — acá se guardan el texto recibido y el informe cada vez que se corre el programa.
 - `docs/ARCHITECTURE.md` — explica el diagrama de bloques del TP y qué parte está hecha y cuál falta.
 - `docs/MODULO_B.md` — el checklist detallado de todo lo que pedía Módulo B (ya completo).
@@ -55,7 +55,25 @@ Para correr el programa de verdad:
 python src/main.py
 ```
 
-Esto codifica el texto de ejemplo con Huffman, lo decodifica, y guarda dos archivos en `results/`: el texto recibido (`run1_received.txt`) y el informe con las tablas (`run1_informe_modulo_b.md`).
+Esto codifica el texto de ejemplo (`data/example_text.txt`) con Huffman, lo decodifica, y guarda dos archivos en `results/`: el texto recibido (`run1_received.txt`) y el informe con las tablas (`run1_informe_modulo_b.md`).
+
+### Probar con otro archivo de texto
+
+Para usar otro archivo (por ejemplo, `data/lorem-ipsum.txt`, un texto más largo), se pasa con `--input`:
+
+```bash
+python src/main.py --input data/lorem-ipsum.txt
+```
+
+Cualquier archivo `.txt` que se ponga en `data/` sirve — no hace falta que se llame `example_text.txt`.
+
+**Ojo:** por defecto, los resultados se guardan siempre con el mismo nombre (`results/run1_...`), así que correrlo de nuevo **pisa** los archivos anteriores. Si querés probar varios textos y conservar los resultados de cada uno, usá `--output-prefix` para darle un nombre distinto a cada corrida:
+
+```bash
+python src/main.py --input data/lorem-ipsum.txt --output-prefix results/run_lorem
+```
+
+Eso guarda `results/run_lorem_received.txt` y `results/run_lorem_informe_modulo_b.md`, sin tocar los de `run1`.
 
 ## Cómo seguimos
 
