@@ -47,6 +47,12 @@ def build_output_path(args):
     return f"{args.output_prefix}_received.txt"
 
 
+def build_report_path(args):
+    """Arma el nombre del archivo donde se va a guardar el Informe del
+    Modulo B (las tablas y ejemplos que pide el enunciado)."""
+    return f"{args.output_prefix}_informe_modulo_b.md"
+
+
 def print_parameters(args, text):
     """Muestra por pantalla con que archivo se va a trabajar."""
     print("Parametros:")
@@ -68,8 +74,10 @@ def print_dry_run_notice():
     print("\n[dry-run] Se pudo leer el archivo de entrada bien. No se ejecuto nada mas.")
 
 
-def print_results(output_path, received_text, original_text):
+def print_results(output_path, report_path, received_text, original_text):
     """Muestra el resultado final: donde quedo guardado el texto
-    recibido, y si es igual al texto original."""
+    recibido, donde quedo el informe, y si el texto es igual al
+    original."""
     print(f"\nTexto recibido guardado en: {output_path}")
+    print(f"Informe guardado en:        {report_path}")
     print(f"¿Es igual al original?: {received_text == original_text}")

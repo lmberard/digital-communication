@@ -13,6 +13,7 @@ no hace falta pensar en eso.
 
 import cli
 import source
+import report
 
 
 def main():
@@ -23,7 +24,7 @@ def main():
         return
 
     # Codificamos el texto con Huffman
-    probabilities = source.analyze_text(args.input)
+    counts, probabilities = source.analyze_text(args.input)
     code = source.generate_huffman_code(probabilities)
     bits = source.encode_text(text, code)
 
@@ -35,7 +36,11 @@ def main():
     output_path = cli.build_output_path(args)
     source.save_text(received_text, output_path)
 
-    cli.print_results(output_path, received_text, text)
+    # Armamos el Informe del Modulo B (tablas y ejemplos) en un .md
+    report_path = cli.build_report_path(args)
+    report.generate_module_b_report(text, counts, probabilities, code, bits, received_text, report_path)
+
+    cli.print_results(output_path, report_path, received_text, text)
 
 
 if __name__ == "__main__":
